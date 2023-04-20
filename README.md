@@ -1,3 +1,5 @@
+** NOT FINISHED YET **
+
 This is a simple platformer game built with Pygame. The player can move left, right and jump to reach the end of the level.
 
 To run the game, you will need to have Python 3 and Pygame installed on your computer. You can install Pygame by running pip install pygame in your terminal.
