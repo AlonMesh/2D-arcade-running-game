@@ -17,3 +17,5 @@ tiles.py: This file defines the Tile class, which represents the individual tile
 The settings.py file contains various game settings such as the size of the screen, the size of the tiles, and the layout of the game level.
 
 To start the game, run main.py. The player can move left and right using the arrow keys, and jump using the spacebar. The objective is to reach the end of the level without falling off the screen.
+
+![image](https://user-images.githubusercontent.com/97172662/233684250-8aa15065-d94c-483d-8d84-0dfbc6775170.png)
