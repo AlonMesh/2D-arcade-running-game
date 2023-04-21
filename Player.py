@@ -4,9 +4,13 @@ import pygame
 class Player(pygame.sprite.Sprite):
     def __init__(self, position):
         super().__init__()
-        self.image = pygame.Surface((20, 54))  # (x,y)
-        self.image.fill((72, 113, 196))
+        # self.image = pygame.Surface((20, 54))  # (x,y)
+        # self.image.fill((72, 113, 196))
+        self.image = pygame.image.load("PNG/Players/Player Blue/playerBlue_stand.png").convert_alpha()
+        self.image = pygame.transform.scale(self.image, (22.5, 27))
+        print(self.image.get_height(), "x", self.image.get_width())
         self.rect = self.image.get_rect(topleft=position)
+        self.score = 0
 
         # Player movement
         self.direction = pygame.math.Vector2(0, 0)
@@ -24,10 +28,12 @@ class Player(pygame.sprite.Sprite):
             self.direction.x = self.speed
             self.moves_left = False
             self.moves_right = True
+            self.score += 1
         elif keys[pygame.K_LEFT]:
             self.direction.x = -1 * self.speed
             self.moves_left = True
             self.moves_right = False
+            self.score -= 1
         else:
             self.direction.x = 0
             self.moves_left = False
