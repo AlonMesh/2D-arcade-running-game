@@ -10,7 +10,7 @@ class Level:
         # Setup the level
         self.player = pygame.sprite.GroupSingle()
         self.tiles = pygame.sprite.Group()  # Creating a group of tiles
-        self.req_to_advance = 100
+        self.req_to_advance = 0
         self.setup(level_map_data)
         self.display_surface = surface  # Where the level will be displayed
         self.world_shift = 0  # The speed shifting of the camera on x line
@@ -98,26 +98,26 @@ class Level:
 
     def generate_continue(self):
         # Generate new map
+        # new_map = generate_random_map()
         new_map = generate_random_map()
 
-        # # Calculate the x-coordinate of the right edge of the current tiles
-        # right_edge = max(tile.rect.right for tile in self.tiles.sprites())
-        #
-        # # Add a new tile to the right of the current tiles
-        # new_tile = Tile((right_edge, 0), tile_size)
-        # self.tiles.add(new_tile)
-
         # Set up the new map and player
+        old_tiles = self.tiles.sprites().copy()
+        right_edge = max(tile.rect.right for tile in old_tiles)
 
         for row_index, row in enumerate(new_map):
             for col_index, cell in enumerate(row):
-                x = (self.req_to_advance / 100) * (row_index * tile_size) + col_index * tile_size + 400
+                x = right_edge + col_index * tile_size
                 y = row_index * tile_size
 
-                if cell == 'X' and self.player.sprite.rect.x < x - 250:
-                    # Creating a tile in the cell's indexes and add it to self's tiles group
+                if cell == 'X':
                     tile = Tile((x, y), tile_size)
                     self.tiles.add(tile)
+
+        # Remove old tiles that are not visible anymore
+        for tile in old_tiles:
+            if tile.rect.right < right_edge and tile.rect.right < self.player.sprite.rect.x - 800:
+                tile.kill()
 
     def run(self):
         # Update & draw tiles
@@ -141,8 +141,6 @@ class Level:
         self.score_board()
         # self.is_dead()
 
-        if self.player.sprite.score > self.req_to_advance:
+        if self.player.sprite.score >= self.req_to_advance:
             self.generate_continue()
             self.req_to_advance += 100
-
-        # print(max(tile.rect.right for tile in self.tiles.sprites()))
